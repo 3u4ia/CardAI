@@ -9,6 +9,10 @@ export const DropzoneUploader = ({ files, setFiles }) => {
         [setFiles]
     );
 
+    const handleRemoveFile = (fileToRemove) => {
+        setFiles((prev) => prev.filter((file) => file !== fileToRemove));
+    }
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         onDropRejected: (rejectedFiles) => {
@@ -54,12 +58,28 @@ export const DropzoneUploader = ({ files, setFiles }) => {
                 ) : (
                     files.map((file, index) => (
                         <div key={index} style={{ marginBottom: "10px" }}>
-                            <p>{file.name}</p>
                             <img
                                 src={URL.createObjectURL(file)}
                                 alt={file.name}
                                 style={{ width: "100px", borderRadius: "8px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
                             />
+                            <div style={{ flex: 1 }}>
+                                <p style={{ margin: 0 }}>{file.name}</p>
+                                <button
+                                    onClick={() => handleRemoveFile(file)}
+                                    style={{
+                                        background: "#f44336",
+                                        color: "white",
+                                        border: "none",
+                                        padding: "5px 10px",
+                                        borderRadius: "5px",
+                                        cursor: "pointer",
+                                        marginTop: "5px",
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            </div>
                         </div>
                     ))
                 )}
