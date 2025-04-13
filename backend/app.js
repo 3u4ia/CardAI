@@ -18,7 +18,15 @@ app.use(
 app.post("/something", (req, res) => {
     const thingy = req.body
     uploadFile(req.body);
-})
+
+
+    .catch(err => {
+        console.log(err),
+            res.status(500).json({
+                error: err
+            })
+    })
+});
 
 
 
