@@ -6,36 +6,31 @@ export const FlashcardDisplay = ({ flashcards }) => {
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     const handleNext = () => {
-        if (isTransitioning) return;
+        if (isTransitioning || currentCard >= flashcards.length - 1) return;
         setIsTransitioning(true);
-
-        if (currentCard < flashcards.length - 1) {
-            setFlipped(false);
-            setTimeout(() => {
-                setCurrentCard((prev) => (prev + 1) % flashcards.length);
-                setIsTransitioning(false);
-            }, 200);
-        }
+        setFlipped(false);
+        setTimeout(() => {
+            setCurrentCard((prev) => (prev + 1) % flashcards.length);
+            setIsTransitioning(false);
+        }, 200);
     };
 
     const handlePrevious = () => {
-        if (isTransitioning) return;
+        if (isTransitioning || currentCard <= 0) return;
         setIsTransitioning(true);
 
-        if (currentCard > 0) {
-            setFlipped(false);
-            setTimeout(() => {
-                setCurrentCard((prev) => (prev - 1) % flashcards.length);
-                setIsTransitioning(false);
-            }, 300);
-        }
+        setFlipped(false);
+        setTimeout(() => {
+            setCurrentCard((prev) => (prev - 1) % flashcards.length);
+            setIsTransitioning(false);
+        }, 300);
     };
 
     const toggleFlip = () => setFlipped((prev) => !prev);
 
     return (
-        <div style={{marginTop: "30px", textAlign: "center" }}>
-            <h2>Flashcard {currentCard + 1} of {flashcards.length}</h2>
+        <div style={{marginTop: "40px", textAlign: "center" }}>
+            <h2 style={{ color: "#AD9A5" }} >Flashcard {currentCard + 1} of {flashcards.length}</h2>
 
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "15px" }}>
                 <Flashcard
@@ -47,16 +42,34 @@ export const FlashcardDisplay = ({ flashcards }) => {
             </div>
 
             <div style={{ marginTop: "15px", display: "flex", justifyContent: "center", gap: "15px" }}>
-                <button onClick={handlePrevious} disabled={currentCard === 0}>
+                <button 
+                    onClick={handlePrevious} 
+                    disabled={currentCard === 0} 
+                    style={navBtnStyle(currentCard === 0)}
+                >
                     Previous
                 </button>
-                <button onClick={handleNext} disabled={currentCard === flashcards.length - 1}>
+                <button 
+                    onClick={handleNext} 
+                    disabled={currentCard === flashcards.length - 1}
+                    style={navBtnStyle(currentCard === flashcards.length - 1)}
+                >
                     Next
                 </button>
             </div>
         </div>
     );
 };
+
+const navBtnStyle = (disabled) => ({
+    backgroundColor: disabled ? "#ccc" : "#A3D9A5",
+    color: "white",
+    padding: "10px 20px",
+    borderRadius: "12px",
+    border: "none",
+    cursor: disabled ? "not-allowed" : "pointer",
+    transition: "background-color 0.3s ease",
+})
 
 const Flashcard = ({ question, answer, flipped, onCardClick }) => {
     return (
@@ -108,13 +121,17 @@ const cardFaceStyles = (isBack) => ({
     width: "100%",
     height: "100%",
     backfaceVisibility: "hidden",
-    backgroundColor: "#fffefc",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
+    backgroundColor: isBack ? "#FFB6C1" : "#A3D9A5",
+    color: "#333",
+    border: "2px solid #eee",
+    borderRadius: "12px",
     padding: "15px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
     transform: isBack ? "rotateY(180deg)" : "none",
+    overflowY: "auto",
+    scrollbarWidth: "thin",
+    scrollbarColor: "ccc transparent",
 })

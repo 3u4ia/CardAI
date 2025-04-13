@@ -29,10 +29,14 @@ export const DropzoneUploader = ({ files, setFiles }) => {
             <div
                 {...getRootProps()}
                 style={{
-                    border: "2px dashed #888",
-                    pading: "20px",
+                    border: "2px dashed #A3D9A5",
+                    pading: "30px",
                     textAlign: "center",
                     cursor: "pointer",
+                    backgroundColor: "#f9f9f9",
+                    borderRadius: "12px",
+                    color: "#666",
+                    boxShadow: "0 2px 5px rgba(0,0,0,0.05)",
                 }}
             >
                 <input {...getInputProps()} />
@@ -44,17 +48,17 @@ export const DropzoneUploader = ({ files, setFiles }) => {
             </div>
 
             <div style={{ marginTop: "20px" }}>
-                <h3>Uploaded Files:</h3>
+                <h3 style={{ color: "#A3D9A5" }}>Uploaded Files:</h3>
                 {files.length === 0 ? (
-                    <p>No files uploaded yet.</p>
+                    <p style={{ color: "#999" }} >No files uploaded yet.</p>
                 ) : (
                     files.map((file, index) => (
-                        <div key={index}>
+                        <div key={index} style={{ marginBottom: "10px" }}>
                             <p>{file.name}</p>
                             <img
                                 src={URL.createObjectURL(file)}
                                 alt={file.name}
-                                style={{ width: "100px", height: "auto", margin: "10px" }}
+                                style={{ width: "100px", borderRadius: "8px", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
                             />
                         </div>
                     ))
