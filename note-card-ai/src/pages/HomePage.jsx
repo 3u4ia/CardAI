@@ -25,6 +25,7 @@ export const HomePage = () => {
         });
 
         try {
+            setLoading(true);
             const response = await fetch("http://localhost:8080/upload", {
                 method: "POST",
                 body: formData,
@@ -35,6 +36,8 @@ export const HomePage = () => {
 
             console.log("status", status);
             console.log("responsejson", responseJson);
+
+            setLoading(false);
 
             if (status === 200) {
                 setFlashcards((prevFlashcards) => [...prevFlashcards, ...responseJson.flashcards]);
@@ -74,7 +77,7 @@ export const HomePage = () => {
                 </h1>
 
                 <p style={{ textAlign: "center", marginBottom: "30px", fontSize: "1.1rem" }}>
-                    Upload your handwritten or typed notes and instantly generate helpful flashcards.
+                    Upload an image of your handwritten or typed notes and instantly generate helpful flashcards.
                 </p>
 
                 <DropzoneUploader files={files} setFiles={setFiles} />
@@ -92,15 +95,15 @@ export const HomePage = () => {
                             cursor: "pointer",
                             boxShadow: "0 40px 10px rgba(0, 0, 0, 0.15)",
                             transition: "background-color 0.3s",
+
                         }}
+                        disabled={loading}
                         onMouseOver={(e) => (e.target.style.backgroundColor = "#e04394")}
                         onMouseOut={(e) => (e.target.style.backgroundColor = "#ff4fa2")}
                     >
-                        Generate Flashcards
+                        {loading ? "Generating..." : "Generate Flashcards"}
                     </button>
                 </div>
-
-                {loading && <p style={{ marginTop: "30px", textAlign: "center", color: "#008060" }}>Generating flashcards...</p>}
 
                 {flashcards.length > 0 && <FlashcardDisplay flashcards={flashcards} />}
                 {/* <FlashcardDisplay flashcards={sampleFlashcards} /> */}

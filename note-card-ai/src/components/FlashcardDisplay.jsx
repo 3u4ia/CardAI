@@ -30,7 +30,7 @@ export const FlashcardDisplay = ({ flashcards }) => {
 
     return (
         <div style={{marginTop: "40px", textAlign: "center" }}>
-            <h2 style={{ color: "#AD9A5" }} >Flashcard {currentCard + 1} of {flashcards.length}</h2>
+            <h2 style={{ color: "black" }} >Flashcard {currentCard + 1} of {flashcards.length}</h2>
 
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "15px" }}>
                 <Flashcard
