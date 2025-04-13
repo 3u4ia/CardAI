@@ -34,7 +34,7 @@ export const uploadFile = async (files) => {
                 role: "user",
                 parts: [
                     {
-                        text: "Make flashcards for this set of notes and structure them in json under the format [ {'question':question, 'answer':answer } ]"
+                        text: "Make flashcards for this set of notes and structure them in json under the format [ {'question':question, 'answer':answer } ] make sure you have an even amount of flashcards based on the images"
                     },
                     ...inlineDataArray
                 ]
