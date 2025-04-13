@@ -18,16 +18,25 @@ export const uploadFile = async (body) => {
             mimeType: mimeType,
         }
     }
+
+    const fileToGenerativePart = (path, mimeType) => {
+        return {
+            inlineData: {
+                data: Buffer.from(fs.readFileSync(path)).toString('base64'),
+                mimeType
+            }
+        }
+    }
     
     const response1 = await ai.models.generateContent({
-        model: "gemini-2.0-flesh",
+        model: "gemini-2.0-flash",
         contents: [
             "Make flashcards for this set of notes and structure them in json under the format [ {'question':question, 'answer':answer } ]",
-            imageParts
+            fileToGenerativePart(body[0].path, mimeType)
         ]
 
     });
-    console.log(response1);
+    console.log(response1.text);
 
 
 
