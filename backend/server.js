@@ -3,15 +3,20 @@ import { GoogleGenAI } from '@google/genai';
 
 
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
+export const makeInstance = () => {
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 
-const chat = ai.chats.create({ model: "gemini-2.0-flash" })
+    return ai.chats.create({ model: "gemini-2.0-flash" })
+
+}
 
 
 
 
 
-module.exports = chat;
+
+//module.exports = chat;
+
 
 
 
