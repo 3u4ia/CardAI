@@ -17,7 +17,7 @@ app.use(
 
 app.post("/something", (req, res) => {
     const thingy = req.body
-    uploadFile(req.body);
+    uploadFile(req, res);
 })
 
 
