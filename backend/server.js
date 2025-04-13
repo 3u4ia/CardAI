@@ -20,9 +20,7 @@ export const makeInstance = () => {
 
 
 
-// const response1 = await chat.sendMessage({
-//     message: "Tell me about dogs",
-// })
+
 
 // console.log("chat response 1.text: ", response1.text);
 
