@@ -29,8 +29,16 @@ export const uploadFile = async (files) => {
     const response1 = await ai.models.generateContent({
         model: "gemini-2.0-flash",
         contents: [
-            "Make flashcards for this set of notes and structure them in json under the format [ {'question':question, 'answer':answer } ]",
-            ...inlineDataArray
+            
+            {
+                role: "user",
+                parts: [
+                    {
+                        text: "Make flashcards for this set of notes and structure them in json under the format [ {'question':question, 'answer':answer } ]"
+                    },
+                    ...inlineDataArray
+                ]
+            }
         ]
 
     });
