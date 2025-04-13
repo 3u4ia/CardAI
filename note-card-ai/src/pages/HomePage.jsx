@@ -11,6 +11,24 @@ export const HomePage = () => {
         if (files.length === 0) {
             alert("No files to submit!");
             return;
+        } else {
+            console.log(JSON.stringify(files));
+            const response = await fetch('http://localhost:8080/something', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(files)
+                
+            })
+            
+            const status = response.status;
+            const responseJson = await response.json();
+            console.log('status', status);
+            console.log('responsejson', responseJson)
+            if(response.status === 200){
+                setFlashcards((prevFlashcards) => [...prevFlashcards, ...responseJson.flashcards])
+            }
         }
 
         //setup submit calling backend
