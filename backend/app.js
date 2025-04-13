@@ -5,6 +5,7 @@ const port = 8080;
 
 router.post((req, res, next) => {
     const thingy = req.body.username
+    UploadToGemini(thingy);
 })
 
 
