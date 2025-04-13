@@ -1,6 +1,6 @@
-import {makeInstance} from '../server.js'
 import mime from 'mime-types';
 import fs from 'fs'
+import ai from '../GeminiClient.js';
 
 export const uploadFile = async (body) => {
     console.log(body);
@@ -19,8 +19,8 @@ export const uploadFile = async (body) => {
         }
     }
     
-    const chat = makeInstance();
-    const response1 = await chat.generateContent({
+    const response1 = await ai.models.generateContent({
+        model: "gemini-2.0-flesh",
         contents: [
             "Make flashcards for this set of notes and structure them in json under the format [ {'question':question, 'answer':answer } ]",
             imageParts
