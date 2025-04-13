@@ -40,7 +40,7 @@ export const HomePage = () => {
             setLoading(false);
 
             if (status === 200) {
-                setFlashcards((prevFlashcards) => [...prevFlashcards, ...responseJson.flashcards]);
+                setFlashcards(() => [...responseJson.flashcards]);
             }
         } catch (error) {
             console.error("upload failed", error);
