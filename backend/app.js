@@ -1,36 +1,15 @@
 import express from 'express';
-const app = express();
-import cors from 'cors'
-import multer from 'multer';
-import {uploadFile} from './service/UploadToGemini.js';
+import { registerMiddleWare } from './middleware/index.js';
+import { routing } from './routes/cardRoute.js';
+
 const port = 8080;
-
-app.use(cors());
-app.use(express.json());
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-app.use((req, res, next) => {
-        console.log("A new request received at " + new Date(Date.now()));
-        next();
-    }
-)
+const app = express();
 
 
-app.post("/upload", upload.array("files"), async (req, res) => {
-    try {
-        console.log("Uploaded files:", req.files);
-        
 
-        const flashcards = await uploadFile(req.files);
-        res.status(200).json({ flashcards });
-    } catch (error) {
-        console.error("Upload error:", error);
-        res.status(500).json({ message: "Upload failed" });
-    }
-});
+// Gets the json parsing and cors thing out of the way eventually the gemini stuff will be there too
+registerMiddleWare(app);
 
-app.listen(port, () => {
-    console.log(`Tutorial app listneing on port ${port}...`);
-});
+routing(app);
+
+export default app;
