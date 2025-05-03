@@ -1,8 +1,15 @@
-import { StyleSheet, Text, View, SafeAreaView, Button, StatusBar, Platform, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Button, StatusBar, Platform, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Camera, useCameraDevices } from 'react-native-vision-camera';
 export default function App() {
   console.log("app executed");
   const handlePress = () => alert("Text pressed");
 
+  return (cardView())
+
+}
+
+function cardView() {
   return (
     <SafeAreaView style={styles.background}> 
     <View style={styles.topToolbar}>
@@ -11,12 +18,12 @@ export default function App() {
       <View style={
         styles.noteCard
       }> 
-      <Text style={styles.text}>Card 1</Text>
+      <Text style={styles.text}>Cardh 1</Text>
       </View>
       <View style={
         styles.noteCard
       }> 
-      <Text style={styles.text}>Card 2</Text>
+      <Text style={styles.text}>Cardhyc</Text>
       </View>
       <View style={
         styles.noteCard
@@ -35,7 +42,34 @@ export default function App() {
       </View>
       </ScrollView>
     </SafeAreaView>
+);
+}
+
+function CameraComponent() {
+  const [hasPermission, setHasPermission] = useState(false);
+  const devices = useCameraDevices();
+  const device = devices.back;
+
+  useEffect(() => {
+    (async () => {
+      const status = await Camera.requestCameraPermission();
+      setHasPermission(status === 'authorized');
+    })();
+  }, []);
+
+  if (!hasPermission) {
+    return <Text>No camera permission</Text>;
+  }
+
+  if (device == null) {
+    return <Text>Loading camera...</Text>;
+  }
+
+  return (
+    <Camera device={device} isActive={true} style={absoluteFill}
+    />
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -71,5 +105,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#126e00',
     height: '10%',
     top: 0
+  },
+
+  absoluteFill: {
+    height: '100%',
+    width: '100%'
   }
+
 });
