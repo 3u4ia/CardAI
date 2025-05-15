@@ -1,8 +1,21 @@
 import { StyleSheet, Text, View, SafeAreaView, Button, StatusBar, Platform, ScrollView} from 'react-native';
+import { Camera } from 'react-native-vision-camera';
 export default function App() {
   console.log("app executed");
-  const handlePress = () => alert("Text pressed");
+  const device = useCameraDevice('back')
 
+  if(device == null) return <NoCameraErrorView />
+
+  return (
+    <Camera
+      style={StyleSheet.absoluteFill}
+      device={device}
+      isActive={true}
+    />
+  );
+}
+
+function cardView() {
   return (
     <SafeAreaView style={styles.background}> 
     <View style={styles.topToolbar}>
